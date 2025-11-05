@@ -10,3 +10,5 @@ Como usar:
 4. rode o servidor na linha de comando com: python server.py ou seu método de execução de códigos em python
 5. abra a página html em um navegador
 6. divirta-se
+regras de uso ----
+

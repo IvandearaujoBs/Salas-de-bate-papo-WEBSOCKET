@@ -2,6 +2,7 @@ import asyncio
 import websockets
 import json
 from datetime import datetime
+import os
 
 connected_clients = {}
 chat_rooms = {
@@ -316,13 +317,21 @@ async def broadcast_to_room(room, message):
         print(f"Erro em broadcast_to_room: {e}")
 
 async def main():
-    print("Iniciando servidor de chat na porta 8765...")
+    print("Iniciando servidor de chat...")
     try:
-        async with websockets.serve(handle_connection, "localhost", 8765, ping_interval=20, ping_timeout=60):
-            print("Servidor de chat rodando em ws://localhost:8765")
-            await asyncio.Future()  # Mantém o servidor rodando
+        port = int(os.environ.get("PORT", 8765))  # Porta dinâmica para Railway
+        async with websockets.serve(
+            handle_connection,
+            host="0.0.0.0",
+            port=port,
+            ping_interval=20,
+            ping_timeout=60
+        ):
+            print(f"Servidor de chat rodando em ws://0.0.0.0:{port}")
+            await asyncio.Future()  # Mantém o servidor ativo
     except Exception as e:
         print(f"Erro ao iniciar servidor: {e}")
+
 
 
 if __name__ == "__main__":

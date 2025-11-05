@@ -315,14 +315,11 @@ async def broadcast_to_room(room, message):
     except Exception as e:
         print(f"Erro em broadcast_to_room: {e}")
 
-import os
-
 async def main():
-    print("Iniciando servidor de chat...")
+    print("Iniciando servidor de chat na porta 8765...")
     try:
-        port = int(os.environ.get("PORT", 8765))
-        async with websockets.serve(handle_connection, "0.0.0.0", port, ping_interval=20, ping_timeout=60):
-            print(f"Servidor de chat rodando em ws://0.0.0.0:{port}")
+        async with websockets.serve(handle_connection, "localhost", 8765, ping_interval=20, ping_timeout=60):
+            print("Servidor de chat rodando em ws://localhost:8765")
             await asyncio.Future()  # Mantém o servidor rodando
     except Exception as e:
         print(f"Erro ao iniciar servidor: {e}")
